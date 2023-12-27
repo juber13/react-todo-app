@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [val , setValue] = useState(null)
@@ -9,6 +10,8 @@ function App() {
   const [updateState , setUpDateState] = useState(false);
   const [id , setId] = useState(-1);
   const [searchInput , setSearchInput] = useState("");
+
+
 
 
   const addToLocalStorage = (data) => {
@@ -28,11 +31,14 @@ function App() {
         setUpDateState(false);
         setValue("");
         addToLocalStorage(items); 
+        toast.success("Item Updated")
       }
     }else{
       setLists([...list , {name : val , id : list.length + 1 , state : false}]);
       setValue("");
+      toast.update("Item Added")
       addToLocalStorage(list);
+      toast.success("Item Updated")
     }
   }
 
@@ -54,6 +60,7 @@ function App() {
        setValue("");
      }
      setUpDateState(false)
+     toast.warn("Item Deleted")
   }
 
   const handleCheckBox = (id) => {
@@ -74,24 +81,35 @@ function App() {
    }
 
 
-  function filterOut(data){
-    return data.filter((item) => item.name.toLowerCase().includes(searchInput))
-  }
+  // function filterOut(data){
+  //   return data.filter((item) => item.name.toLowerCase().includes(searchInput))
+  // }
 
 
   return (
     <div className='todo-container'>
-     <div className='flex'>
-      <input type="text"  placeholder='Find Todos' onChange={(e) => setSearchInput(e.target.value)} value={searchInput}/>
-      <button>Search Todos!!</button>
-     </div>
-      <label style={{fontSize : "2rem" ,  position: "relative" , left:"5px", top:"10px"}} className={updateState ? "show" : "hide"} onClick={defaultState}>⬅️</label>
+        <div className="heading">
+           <h2>Grocery Bud</h2>
+        </div>
        <form className='flex' onSubmit={addTodos}>
+      <label style={{fontSize : "1rem" ,  position: "relative" , left:"5px"}} className={updateState ? "show" : "hide"} onClick={defaultState}>⬅️</label>
        <input style={{position: "relative"}} type="text"  placeholder='Todo Name!' onChange={(e) => setValue(e.target.value)} value={val}/>
-       <button type='submit'  style={{marginRight:"20px"}}>{updateState ? "upDate" : "Add Todos!"}</button>
+       <button type='submit'  style={{marginRight:"20px"}}>{updateState ? "Update" : "Add Item!"}</button>
+       <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+       />
       </form>
       <div>
-        {list.length > 0 ? filterOut(list).map(item => {
+        {list.length > 0 ? list.map(item => {
           return(
             <li key={item.id} style={{marginTop:"20px"}}>
                 <span style={{marginRight:"20px"}} className={item.state ? "active" : ""}>{item.name}</span> 
@@ -100,7 +118,7 @@ function App() {
                 <input type="checkbox"  checked={item.state} onChange={() => handleCheckBox(item.id)}/>
             </li>
           )
-        }) : "No Todos to show"}
+        }) : <p>No Todos to show!!</p>}
          
       </div>
     </div>

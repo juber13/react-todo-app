@@ -12,6 +12,10 @@ html, body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
+  max-width: 500px;
+  margin: 100px auto;
+  border: 1px solid #000;
 }
 
 
@@ -27,11 +31,14 @@ input{
 }
 
 .hide{
-  opacity: 0;
+  display: none;
 }
 
 .show{
-  opacity: 1;
+  display: block;
+}
+
+.todo-container{
 }
 
 button {
@@ -56,4 +63,16 @@ input[type="checkbox"]{
   width: 40px;
   height: 20px;
   cursor: pointer;
+}
+
+form{
+  background: #000;
+  padding: 1rem;
+}
+
+
+li{
+  list-style-type: none;
+  background: #000;
+  padding: 1rem;
 }
