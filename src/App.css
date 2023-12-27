@@ -21,7 +21,11 @@ html, body{
 
 
 input{
-  padding: 0.6rem;
+  padding: 0.8rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+
 }
 
 
@@ -36,9 +40,6 @@ input{
 
 .show{
   display: block;
-}
-
-.todo-container{
 }
 
 button {
